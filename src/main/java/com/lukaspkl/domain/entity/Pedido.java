@@ -3,9 +3,10 @@ package com.lukaspkl.domain.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-public class Pedido {
+public class Pedido<itemPedido> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +22,19 @@ public class Pedido {
     @Column(length = 20, precision = 2)
     private BigDecimal total;
 
+    @OneToMany(mappedBy = "pedido")
+    private Set<itemPedido> itens;
+
     public Integer getId() {
         return id;
+    }
+
+    public Set<itemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<itemPedido> itens) {
+        this.itens = itens;
     }
 
     public void setId(Integer id) {
