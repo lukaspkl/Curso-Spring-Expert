@@ -47,6 +47,8 @@ public class VendasApplication {
             }else {
               todosclientes.forEach(System.out::println);
             }
+/*
+*/
 
         };
     }

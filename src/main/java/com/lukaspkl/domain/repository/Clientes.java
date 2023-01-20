@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 @Repository
 public class Clientes {
 
-    private static String INSERT = "insert into cliente (nome) values (?) ";
+
     private static String SELECT_ALL = "SELECT * FROM cliente ";
     private static String UPDATE = "UPDATE cliente SET nome= ? WHERE id = ?";
     private static String DELETE = "DELETE FROM cliente  WHERE id = ?";
@@ -24,8 +26,12 @@ public class Clientes {
     @Autowired
     private  JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private EntityManager entityManager;
+
+    @Transactional
     public Cliente salvar (Cliente cliente){
-        jdbcTemplate.update(INSERT, new Object[]{cliente.getNome()});
+        entityManager.persist(cliente);
                 return cliente;
     }
 
