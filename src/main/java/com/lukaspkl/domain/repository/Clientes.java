@@ -2,6 +2,7 @@ package com.lukaspkl.domain.repository;
 
 
 import com.lukaspkl.domain.entity.Cliente;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,7 +17,9 @@ import java.util.List;
 public class Clientes {
 
     private static String INSERT = "insert into cliente (nome) values (?) ";
-    private static String SELECT_ALL = "SELECT * FROM CLIENTE ";
+    private static String SELECT_ALL = "SELECT * FROM cliente ";
+    private static String UPDATE = "UPDATE cliente SET nome= ? WHERE id = ?";
+    private static String DELETE = "DELETE FROM cliente  WHERE id = ?";
 
     @Autowired
     private  JdbcTemplate jdbcTemplate;
@@ -26,15 +29,44 @@ public class Clientes {
                 return cliente;
     }
 
+    public Cliente atualizar (Cliente cliente){
+        jdbcTemplate.update(UPDATE,
+                new Object[]{cliente.getNome(), cliente.getId()});
+        return cliente;
+    }
+
+    public void deletar (Cliente cliente){
+        deletar(cliente.getId());
+
+    }
+
+     public List <Cliente> buscarPorNome (String nome){
+        return jdbcTemplate.query(
+                SELECT_ALL.concat(" Where nome like  ?"),
+                new Object[]{"%" + nome + "%"},
+
+                obterClienteMapper());
+    }
+
+    public void deletar (Integer id){
+        jdbcTemplate.update(DELETE, new Object[]{id});
+
+    }
+
     public List<Cliente> obtertodos (){
-        return jdbcTemplate.query(SELECT_ALL, new RowMapper<Cliente>() {
+        return jdbcTemplate.query(SELECT_ALL, obterClienteMapper());
+    }
+
+    @NotNull
+    private RowMapper<Cliente> obterClienteMapper() {
+        return new RowMapper<Cliente>() {
             @Override
             public Cliente mapRow(ResultSet resultSet, int i) throws SQLException {
                 Integer id = resultSet.getInt("id");
                 String nome = resultSet.getString("nome");
                 return new Cliente(id,nome);
             }
-        });
+        };
     }
 
 
