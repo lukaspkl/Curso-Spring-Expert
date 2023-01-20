@@ -1,5 +1,7 @@
 package com.lukaspkl.domain.entity;
 
+import com.lukaspkl.domain.entity.Cliente;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
