@@ -1,9 +1,10 @@
 package com.lukaspkl;
 
+import com.lukaspkl.service.Development;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+
+@Development
 public class MinhaConfiguration {
 
     @Bean(name = "applicationName" )
