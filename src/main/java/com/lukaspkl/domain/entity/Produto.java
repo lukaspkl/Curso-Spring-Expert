@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-
 public class Produto {
 
     @Id
@@ -12,7 +11,7 @@ public class Produto {
     private Integer id;
 
     private String descricao;
-    
+
     @Column(name = "preço_unitario")
     private BigDecimal preco;
 
