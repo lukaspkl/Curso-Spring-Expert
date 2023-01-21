@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-public class Pedido<itemPedido> {
+public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,23 +19,24 @@ public class Pedido<itemPedido> {
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 
-    @Column(length = 20, precision = 2)
+    @Column(precision = 20 , scale = 2)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "pedido")
-    private Set<itemPedido> itens;
+    @OneToMany (mappedBy = "pedido")
+    private Set<ItemPedido> itens;
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
+    }
 
     public Integer getId() {
         return id;
     }
 
-    public Set<itemPedido> getItens() {
-        return itens;
-    }
-
-    public void setItens(Set<itemPedido> itens) {
-        this.itens = itens;
-    }
 
     public void setId(Integer id) {
         this.id = id;
@@ -63,6 +64,15 @@ public class Pedido<itemPedido> {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", dataPedido=" + dataPedido +
+                ", total=" + total +
+                '}';
     }
 }
 
