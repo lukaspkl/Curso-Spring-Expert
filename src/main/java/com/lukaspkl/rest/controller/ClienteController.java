@@ -1,6 +1,4 @@
 package com.lukaspkl.rest.controller;
-
-
 import com.lukaspkl.domain.entity.Cliente;
 import com.lukaspkl.domain.repository.Clientes;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +27,6 @@ public class ClienteController {
 
         return ResponseEntity.notFound().build();
 
-
     }
 
     @PostMapping ("/api/clientes")
@@ -40,6 +37,16 @@ public class ClienteController {
 
     }
 
+    @DeleteMapping ("/api/clientes/{id}")
+    @ResponseBody
+    public ResponseEntity delete (@PathVariable Integer id) {
 
+        Optional<Cliente> cliente = clientes.findById(id);
 
+        if (cliente.isPresent()){
+            clientes.delete(cliente.get());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
