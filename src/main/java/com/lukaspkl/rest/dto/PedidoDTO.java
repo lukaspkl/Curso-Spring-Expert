@@ -12,6 +12,6 @@ import java.util.List;
 public class PedidoDTO {
 
     private Integer cliente;
-    private BigDecimal tota;
+    private BigDecimal total;
     private List<ItemPedidoDTO> items;
 }

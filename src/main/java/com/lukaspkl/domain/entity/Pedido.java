@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -36,5 +37,7 @@ public class Pedido {
         return itens;
     }
 
+    public void setItens(List<ItemPedido> itemsPedidos) {
+    }
 }
 
