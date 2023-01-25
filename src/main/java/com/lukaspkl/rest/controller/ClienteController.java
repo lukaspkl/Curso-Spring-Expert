@@ -14,17 +14,17 @@ import java.util.List;
 @RequestMapping ("/api/clientes")
 public class ClienteController {
 
-    private Clientes clientes;
+    private Clientes repository;
 
     public ClienteController(Clientes clientes) {
 
-        this.clientes = clientes;
+        this.repository = clientes;
     }
 
     @GetMapping("{id}")
 
     public Cliente getclienteById (@PathVariable Integer id){
-        return clientes
+        return repository
                 .findById(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente nao encontrado"));
@@ -34,16 +34,16 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente save (@RequestBody Cliente cliente){
-        return clientes.save(cliente);
+        return repository.save(cliente);
     }
 
     @DeleteMapping ("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete (@PathVariable Integer id) {
 
-        clientes.findById(id)
+        repository.findById(id)
                 .map(cliente -> {
-                    clientes.delete(cliente);
+                    repository.delete(cliente);
                     return cliente;
                 })
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -55,10 +55,10 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update (@PathVariable Integer id,
                         @RequestBody Cliente cliente){
-         clientes.findById(id)
+         repository.findById(id)
                 .map( clienteExistente -> {
                     cliente.setId(clienteExistente.getId());
-                    clientes.save(cliente);
+                    repository.save(cliente);
                     return clienteExistente;
                 }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -71,7 +71,7 @@ public class ClienteController {
                                     .withStringMatcher(
                                             ExampleMatcher.StringMatcher.CONTAINING);
         Example example = Example.of(filtro, matcher);
-         return clientes.findAll(example);
+         return repository.findAll(example);
     }
 }
 
