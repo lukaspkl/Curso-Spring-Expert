@@ -26,7 +26,6 @@ public class ProdutoController {
     }
 
     @GetMapping ("{id}")
-    @ResponseStatus(NO_CONTENT)
     public Produto getById (@PathVariable Integer id){
         return repository
                 .findById(id)
@@ -35,7 +34,7 @@ public class ProdutoController {
     }
     @PutMapping ("{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @PathVariable Integer id, Produto produto){
+    public void update ( @PathVariable Integer id, @RequestBody Produto produto){
         repository
                 .findById(id)
                 .map(p ->{
