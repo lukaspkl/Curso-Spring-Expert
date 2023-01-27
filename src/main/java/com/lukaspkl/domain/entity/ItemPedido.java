@@ -29,7 +29,4 @@ public class ItemPedido {
     private Integer quantidade;
 
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
 }

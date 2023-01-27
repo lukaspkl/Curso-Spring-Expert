@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,7 +26,7 @@ public class Cliente {
 
     @JsonIgnore
     @OneToMany( mappedBy = "cliente")
-    private Set<Pedido> pedidos;
+    private List<Pedido> pedidos;
 
 
 

@@ -34,7 +34,7 @@ public class PedidoServiceImpl  implements PedidoService {
 
     @Override
     @Transactional
-    public Pedido salvar(PedidoDTO dto) {
+    public Pedido salvar( PedidoDTO dto) {
         Integer idCliente = dto.getCliente();
        Cliente cliente = clientesRepository
                 .findById(idCliente)
@@ -49,17 +49,19 @@ public class PedidoServiceImpl  implements PedidoService {
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
 
-        List<ItemPedido> itemsPedidos = converterItems(pedido, dto.getItems());
+        List<ItemPedido> itemsPedido = converterItems(pedido, dto.getItems());
         repository.save(pedido);
-        itemsPedidoRepository.saveAll(itemsPedidos);
-        pedido.setItens(itemsPedidos);
+        itemsPedidoRepository.saveAll(itemsPedido);
+        pedido.setItens(itemsPedido);
+
         return pedido;
 
     }
 
-    private List<ItemPedido> converterItems (Pedido pedido, List<ItemPedidoDTO> items ){
+
+    private List<ItemPedido> converterItems (Pedido pedido,  List<ItemPedidoDTO> items ){
         if (items.isEmpty()){
-            throw new RegraNegocioException("Nao e possivel realizar o pedido sem items.");
+            throw  new RegraNegocioException("Nao e possivel realizar o pedido sem items.");
         }
 
         return items

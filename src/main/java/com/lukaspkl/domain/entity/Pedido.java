@@ -31,13 +31,10 @@ public class Pedido {
     private BigDecimal total;
 
     @OneToMany (mappedBy = "pedido")
-    private Set<ItemPedido> itens;
+    private List<ItemPedido> itens;
 
-    public Set<ItemPedido> getItens() {
-        return itens;
-    }
 
-    public void setItens(List<ItemPedido> itemsPedidos) {
-    }
+
+
 }
 
